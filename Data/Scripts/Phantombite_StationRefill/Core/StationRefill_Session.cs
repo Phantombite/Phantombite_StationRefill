@@ -65,7 +65,7 @@ namespace PhantombiteStationRefill.Core
                 if (string.IsNullOrEmpty(msg)) return;
 
                 if (msg == "READY")              { OnReady();       return; }
-                if (msg.StartsWith("CMD|\"))      { OnCommand(msg);  return; }
+                if (msg.StartsWith("CMD|"))      { OnCommand(msg);  return; }
                 if (msg.StartsWith("LOGLEVEL|")) { OnLogLevel(msg); return; }
                 if (msg.StartsWith("PERFLEVEL|")) { OnPerfLevel(msg); return; }
             }
