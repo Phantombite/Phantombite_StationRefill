@@ -56,6 +56,15 @@ namespace PhantombiteStationRefill.Modules
         public void Update()
         {
             if (_config == null || !MyAPIGateway.Multiplayer.IsServer) return;
+
+            // Verteilte Auffüllung (PerfLevel >= 1): pro Tick nur BATCH_PER_TICK Aufgaben abarbeiten.
+            // Ohne diese Schleife blieb die Queue bisher unbearbeitet und es wurde nichts aufgefüllt.
+            for (int i = 0; i < BATCH_PER_TICK && _refillQueue.Count > 0; i++)
+            {
+                try { _refillQueue.Dequeue()(); }
+                catch (Exception ex) { Error("Queue: " + ex.Message); }
+            }
+
             if (_stationGrids.Count == 0) return;
 
             _tickCounter++;

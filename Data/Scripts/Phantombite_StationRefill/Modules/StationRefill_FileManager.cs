@@ -27,6 +27,9 @@ namespace PhantombiteStationRefill.Modules
 
         public void Init()
         {
+            // Config nur auf dem Server anlegen/lesen — Clients brauchen sie nicht
+            if (!MyAPIGateway.Multiplayer.IsServer) return;
+
             EnsureConfigExists();
             LoadConfig();
         }
